@@ -1,0 +1,23 @@
+.contactList {
+  width: 600px;
+}
+
+.contactList__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid blue;
+}
+
+.contactList__name {
+  margin-right: 10px;
+}
+
+.contactList__number {
+  margin-right: 10px;
+}
+
+.contactList__deleteBtn {
+  background-color: tomato;
+}

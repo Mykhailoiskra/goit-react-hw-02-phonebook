@@ -1,6 +1,9 @@
 import { Component } from "react";
+import shortid from "shortid";
 import "./App.css";
 import ContactList from "./Components/ContactList/ContactList.jsx";
+import ContactForm from "./Components/ContactForm/ContactForm.jsx";
+import Filter from "./Components/Filter/Filter.jsx";
 
 class App extends Component {
   state = {
@@ -21,15 +24,47 @@ class App extends Component {
     }));
   };
 
+  addContact = ({ name, number }) => {
+    const contact = {
+      id: shortid.generate(),
+      name: name,
+      number: number,
+    };
+
+    if (!this.state.contacts.find((contact) => contact.name === name)) {
+      this.setState(({ contacts }) => {
+        return { contacts: [contact, ...contacts] };
+      });
+    } else {
+      alert("Name already is in the list");
+    }
+  };
+
+  changeFilter = (event) => {
+    this.setState({ filter: event.currentTarget.value });
+  };
+
+  getFilteredContacts = () => {
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
+
   render() {
-    const { contacts } = this.state;
+    const { filter } = this.state;
+
+    const filteredContacts = this.getFilteredContacts();
     return (
       <div>
         <h1>Phonebook</h1>
+        <ContactForm onAdd={this.addContact} />
 
         <h2>Contacts</h2>
+        <Filter value={filter} onChange={this.changeFilter} />
         <ContactList
-          contacts={contacts}
+          contacts={filteredContacts}
           onDeleteContact={this.deleteContact}
         ></ContactList>
       </div>

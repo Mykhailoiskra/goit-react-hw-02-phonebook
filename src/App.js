@@ -1,9 +1,9 @@
 import { Component } from "react";
 import shortid from "shortid";
 import "./App.css";
-import ContactList from "./Components/ContactList/ContactList.jsx";
-import ContactForm from "./Components/ContactForm/ContactForm.jsx";
-import Filter from "./Components/Filter/Filter.jsx";
+import ContactList from "./components/ContactList/ContactList.jsx";
+import ContactForm from "./components/ContactForm/ContactForm.jsx";
+import Filter from "./components/Filter/Filter.jsx";
 
 class App extends Component {
   state = {
@@ -36,7 +36,7 @@ class App extends Component {
         return { contacts: [contact, ...contacts] };
       });
     } else {
-      alert("Name already is in the list");
+      alert(`${name} is already in the list`);
     }
   };
 
@@ -57,16 +57,16 @@ class App extends Component {
 
     const filteredContacts = this.getFilteredContacts();
     return (
-      <div>
-        <h1>Phonebook</h1>
+      <div className="main_container">
+        <h1 className="main_heading">Phonebook</h1>
         <ContactForm onAdd={this.addContact} />
 
-        <h2>Contacts</h2>
+        <h2 className="contacts_heading">Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
         <ContactList
           contacts={filteredContacts}
           onDeleteContact={this.deleteContact}
-        ></ContactList>
+        />
       </div>
     );
   }
